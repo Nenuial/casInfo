@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction à Python 🐍</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pascal Burkhard" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="personal.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction à Python 🐍
+## Variables et opérations de base
+### Pascal Burkhard
+### LDDR 2020-2021
+
+---
+
+
+
+
+
+
+# Variables – fonctionnement et utilité
+
+Dans un programme informatique, une *variable* permet de stocker un *résultat* durant l'exécution du programme. On pourra ainsi accéder à ce résultat en utilisant le *nom* de la *variable*.
+
+--
+
+Une *variable* est en principe, par définition même du mot, modifiable. Lorsqu'on ne peut modifier le contenu d'une *variable* on parle de *constante*. Certains langages de programmation ne font pas cette distinction. Dans Python il n'existe pas de *constante*.
+
+--
+
+Le programme va associer un certain nombre d'informations à une variable, par exemple:
+- son nom
+- son type (sa *class* dans Python)
+- son adresse (mémoire)
+- sa portée
+- …
+
+---
+
+# Variables – conseils et bonnes pratiques
+
+&lt;blockquote&gt;
+&lt;em&gt;There are only two hard things in Computer Science: cache invalidation and naming things.&lt;/em&gt;&lt;br /&gt;
+— Phil Karlton&lt;sup&gt;1&lt;/sup&gt;
+&lt;/blockquote&gt;
+
+Dans Python, un nom de variable peut contenir des caractères alphanumériques (`a-z`, `A-Z` et `0-9`) ainsi que le caractère spécial *tiret bas* (`_`). Les variables sont sensible à la casse (i.e. majuscule et minuscule ne sont pas équivalent).
+
+.center[⚠️ **un nom de variable ne peut pas commencer par un chiffre !**]
+
+--
+
+Lorsque vous écrivez un programme, pensez toujours à la lisibilité de votre code. Que ce soit pour vous ou quelqu'un d'autre !
+
+C'est particulièrement important lorsque vous nommez des *variables* ou des *fonctions*. Pour une variable, son nom devrait refléter son contenu. Par exemple : si votre variable contient une liste de fruits, appelez-la `liste_fruits` et non pas `lf`.
+
+.footnote[
+[1] https://www.karlton.org/2017/12/naming-things-hard/
+]
+
+---
+
+# Variables – conseils et bonnes pratiques
+
+Il existe plusieurs *conventions* pour le nom des variables :
+- Snake case 🐍 (utilisé dans le cadre de ce cours) :&lt;/br&gt;`ma_super_longue_variable = 123`&lt;/br&gt;
+- Camel case 🐫 :&lt;/br&gt;`maSuperLongueVariable = 123`&lt;/br&gt;
+- Pascal case 👤 :&lt;/br&gt;`MaSuperLongueVariable = 123`&lt;/br&gt;
+- Kebab case 🥙 (⚠️ incompatible avec Python car utilise des traits d'union) :&lt;/br&gt;`ma-super-longue-variable = 123`
+
+Essayez d'être cohérent dans vos programmes et utilisez toujours la même convention.
+
+---
+
+# Variables – attribuer une valeur
+
+La plupart des langages de programmation utilisent le signe égal `=` pour attribuer une valeur à une variable. Il existe cependant certains langages qui possèdent d'autres méthodes pour l'attribution d'une valeur à une variable comme par exemple :
+- ALGOL et PASCAL : `variable := 123`
+- R : `variable &lt;- 123`
+- Magick : `variable &lt;&lt; 123`
+
+--
+
+Python utilise le signe `=` pour l'attribution d'une valeur à une variable :
+
+
+```python
+variable = 123
+
+variable
+```
+
+```
+## 123
+```
+
+---
+
+# Variables – attribuer une valeur
+
+Il est également possible d'attribuer une valeur à plusieurs variables en même temps :
+
+
+```python
+variable_1 = variable_2 = 123
+
+variable_1
+```
+
+```
+## 123
+```
+
+```python
+variable_2
+```
+
+```
+## 123
+```
+
+---
+
+# Variables – attribuer une valeur
+
+Ou d'attribuer différentes valeurs à plusieurs variables en même temps :
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;span style="background-color:#ad8cae"&gt;variable_3&lt;/span&gt;, &lt;span style="background-color:#4f93b8"&gt;variable_4&lt;/span&gt; = &lt;span style="background-color:#ad8cae"&gt;123&lt;/span&gt;, &lt;span style="background-color:#4f93b8"&gt;456&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span style="background-color:#ad8cae"&gt;variable_3&lt;/span&gt;&lt;/code&gt;
+
+```
+
+## 123
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;span style="background-color:#4f93b8"&gt;variable_4&lt;/span&gt;&lt;/code&gt;
+
+```
+
+## 456
+
+```
+
+---
+
+# Variables – suppression
+
+Pour supprimer une variable définie précédemment, on peut utiliser une fonction appelée `del()`
+
+
+```python
+variable = 123
+variable
+```
+
+```
+## 123
+```
+
+```python
+del(variable)
+```
+Si on cherchait à accéder au contenu de `variable` après sa suppression, Python retournerait une erreur comme nous le verrons plus loin.
+
+---
+
+# Variables – types de données
+
+Python connait de nombreux types de variables différentes. Quelques exemples de type de données que nous serons amené à utiliser :
+- **nombres**
+  - **nombres entiers** (*integer* ou *int*)
+  - **nombres réels** (*float*)
+  - nombres complexes (*complex*)
+- **chaines de caractère** (*string* ou *str*)
+- listes (*list*)
+- tuples (*tuple*)
+- dictionaires (*dict*)
+- booléens (*bool*)
+
+Nous nous concentrerons dans un premier temps sur les éléments en **gras** de cette liste.
+
+---
+
+# La fonction *type()*
+
+Dans Python, lorsqu'on souhaite connaitre le type d'une variable on peut utiliser la fonction `type()`. Cette fonction nous indique de quelle *class* (i.e. type de données) la variable est. Python utilise des raccourcis tels que `str` pour *string* ou `int` pour *integer*.
+
+
+```python
+variable_integer = 123
+type(variable_integer)
+```
+
+```
+## &lt;class 'int'&gt;
+```
+
+```python
+variable_string = "abc"
+type(variable_string)
+```
+
+```
+## &lt;class 'str'&gt;
+```
+
+```python
+variable_float = 1.23
+type(variable_float)
+```
+
+```
+## &lt;class 'float'&gt;
+```
+
+---
+
+# Variables – types de données
+
+Une variable dans Python a toujours un attribut *class*. Une variable peut cependant changer de type en fonction de son contenu. Par exemple :
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;span style="background-color:#ad8cae"&gt;variable_modif&lt;/span&gt; = 123&lt;br&gt;type(&lt;span style="background-color:#ad8cae"&gt;variable_modif&lt;/span&gt;)&lt;/code&gt;
+
+```
+
+## &lt;class 'int'&gt;
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;span style="background-color:#ad8cae"&gt;variable_modif&lt;/span&gt; = "abc"&lt;br&gt;type(&lt;span style="background-color:#ad8cae"&gt;variable_modif&lt;/span&gt;)&lt;/code&gt;
+
+```
+
+## &lt;class 'str'&gt;
+
+```
+
+---
+
+# Variables - nombres
+
+Parmi les variables numériques, on retrouve notamment les nombres entiers (*integer*) et les nombres réels (*float*).
+
+Lorsqu'on attribue un nombre à une variable, Python détermine s'il s'agit d'un nombre entier, ou d'un nombre réel. On peut forcer le type *nombre réel* en rajoutant un point (`.`) après un nombre entier.
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;variable_int = 1&lt;br&gt;variable_float = 1&lt;span style="background-color:#ad8cae"&gt;.&lt;/span&gt;&lt;br&gt;&lt;br&gt;type(variable_int)&lt;/code&gt;
+
+```
+
+## &lt;class 'int'&gt;
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;type(variable_float)&lt;/code&gt;
+
+```
+
+## &lt;class 'float'&gt;
+
+```
+
+---
+
+# Nombres - opérations de base
+
+Python proposes des *opérateurs* qui permettent la manipulation simple de différents nombres, entres autres :
+- `+` pour l'addition et `-` pour la soustraction
+- `*` pour la multiplication et `/` pour la division
+- `**` pour les puissances
+- `%` pour le modulo
+
+Exemples:
+
+
+```python
+1 + 1
+```
+
+```
+## 2
+```
+
+```python
+3 * 4
+```
+
+```
+## 12
+```
+
+```python
+2 ** 2
+```
+
+```
+## 4
+```
+
+---
+
+# Nombres - opérations de base
+
+On peut effectuer une opération numérique et en attribuer le résultat à une variable. On peut également mélanger variables et chiffres dans une opération.
+
+
+```python
+resultat_1 = 32 * 8
+resultat_1
+```
+
+```
+## 256
+```
+
+```python
+resultat_2 = resultat_1 / 4
+resultat_2
+```
+
+```
+## 64.0
+```
+
+Les parenthèses peuvent influencer la priorité des opérations.
+
+
+```python
+resultat_3 = (2 + 3) * 5
+resultat_3
+```
+
+```
+## 25
+```
+
+
+
+---
+
+# Nombres - opérations de base
+
+Et on peut effectuer des opérations uniquement avec des variables numériques.
+
+
+```python
+variable_1 = 8
+variable_2 = 2
+variable_3 = 1
+
+variable_1 - variable_2
+```
+
+```
+## 6
+```
+
+```python
+variable_1 * variable_2 + variable_3
+```
+
+```
+## 17
+```
+
+```python
+variable_1 ** variable_2
+```
+
+```
+## 64
+```
+
+---
+
+# Variables - chaines de caractères
+
+Pour indiquer à Python qu'on souhaite stocker une chaine de caractère, on met le texte entre guillemets (`"`) ou entre apostrophes (`'`).
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;variable_texte_1 = &lt;span style="background-color:#ad8cae"&gt;"&lt;/span&gt;Ceci est une phrase&lt;span style="background-color:#ad8cae"&gt;"&lt;/span&gt;&lt;br&gt;variable_texte_2 = &lt;span style="background-color:#ad8cae"&gt;'&lt;/span&gt;Et cela est aussi une phrase&lt;span style="background-color:#ad8cae"&gt;'&lt;/span&gt;&lt;br&gt;&lt;br&gt;type(variable_texte_1)&lt;/code&gt;
+
+```
+
+## &lt;class 'str'&gt;
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;type(variable_texte_2)&lt;/code&gt;
+
+```
+
+## &lt;class 'str'&gt;
+
+```
+
+---
+
+# Variables - chaines de caractères
+
+Lorsqu'une phrase contient des guillemets ou des apostrophes, on peut utiliser l'autre caractère pour indiquer qu'il s'agit d'une chaine de caractère. Si une phrase devait contenir les deux, le caractère `\` permet d'*échapper* (i.e. d'annuler) un apostrophe ou un guillemet.
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;variable_texte_1 = "Il fera beau aujourd&lt;span style="background-color:#ad8cae"&gt;'&lt;/span&gt;hui."&lt;br&gt;variable_texte_2 = "Mais il faut s&lt;span style="background-color:#ad8cae"&gt;'&lt;/span&gt;attendre à quelques &lt;span style="background-color:#ad8cae"&gt;\"&lt;/span&gt;petits&lt;span style="background-color:#ad8cae"&gt;\"&lt;/span&gt; nuages."&lt;br&gt;&lt;br&gt;variable_texte_1&lt;/code&gt;
+
+```
+
+## "Il fera beau aujourd'hui."
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;variable_texte_2&lt;/code&gt;
+
+```
+
+## 'Mais il faut s\'attendre à quelques "petits" nuages.'
+
+```
+
+---
+
+# Chaines de caractères - opérations de base
+
+Les chaines de caractères se comportent comme des listes. Un type que données que nous approfondirons plus tard. Voici cependant quelques *opérations* que l'ont peut effectuer avec des chaines de caractères :
+- `+` permet d'*assembler* des chaines de caractères
+- `*` permet de répéter un nombre de fois (doit être un nombre entier)
+
+
+```python
+"abc" + "cde"
+```
+
+```
+## 'abccde'
+```
+
+```python
+"abc" * 2
+```
+
+```
+## 'abcabc'
+```
+
+---
+
+# Chaines de caractères - opérations de base
+
+En plus des opérations de base, une variable de *class* `str` possède un certain nombre de *méthodes* (des fonctions qui permettent d'effectuer des opérations sur cette variable).
+
+
+```python
+variable_texte = "L'hiver va être froid."
+variable_texte
+```
+
+```
+## "L'hiver va être froid."
+```
+
+```python
+variable_texte.upper()
+```
+
+```
+## "L'HIVER VA ÊTRE FROID."
+```
+
+```python
+variable_texte.lower()
+```
+
+```
+## "l'hiver va être froid."
+```
+
+---
+
+# Variables - conversion
+
+Lorsqu'on souhaite convertir une variable d'un type à un autre, il faut utiliser une fonction de conversion. Python propose des fonctions pour chaque type de données. En voici quelques exemples :
+- `int()` permet de convertir en nombre entier
+- `float()` permet de convertir en nombre réel
+- `str()` permet de convertir en chaine de caractère
+
+
+```python
+int("123")
+```
+
+```
+## 123
+```
+
+```python
+float(123)
+```
+
+```
+## 123.0
+```
+
+```python
+str(123)
+```
+
+```
+## '123'
+```
+
+
+---
+
+# Erreurs
+
+Lorsqu'on essaye d'effectuer des opérations qui ne sont pas possible sur des variables, Python affichera des messages d'erreur. Voici quelque messages d'erreurs que vous pourriez rencontrer.
+
+
+```python
+variable_inexistante
+```
+
+```
+## Error in py_call_impl(callable, dots$args, dots$keywords): NameError: name 'variable_inexistante' is not defined
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+```python
+variable_nombre = 123
+variable_nombre.upper()
+```
+
+```
+## Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'int' object has no attribute 'upper'
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+---
+
+# Erreurs
+
+
+```python
+variable_texte = "abc"
+variable_texte + variable_nombre
+```
+
+```
+## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: must be str, not int
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+```python
+int(variable_texte)
+```
+
+```
+## Error in py_call_impl(callable, dots$args, dots$keywords): ValueError: invalid literal for int() with base 10: 'abc'
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+---
+
+# Références
+
+Downey, A. B. (2012). _Think Python_. O'Reilly Media, Inc. 299 pp.
+ISBN: 978-1-4493-3202-0.
+
+Mueller, J. P. (2018). _Beginning Programming with Python For Dummies_.
+John Wiley &amp; Sons. 412 pp. ISBN: 978-1-119-45790-9.
+
+Shaw, Z. A. (2017). _Learn Python 3 the Hard Way: A Very Simple
+Introduction to the Terrifyingly Beautiful World of Computers and
+Code_. Addison-Wesley Professional. 782 pp. ISBN: 978-0-13-469390-3.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

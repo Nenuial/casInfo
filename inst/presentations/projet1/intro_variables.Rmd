@@ -1,0 +1,402 @@
+---
+title: "Introduction à Python 🐍"
+subtitle: "Variables et opérations de base"
+author: "Pascal Burkhard"
+institute: "LDDR 2020-2021"
+output:
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, personal.css]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+library(xaringanthemer)
+library(flair)
+options(htmltools.dir.version = FALSE)
+style_extra_css(
+  css = list(
+    ".remark-slide-content" = list("padding-left" = "80px", "padding-right" = "80px"),
+    ".remark-code" = list("background" = "#dedede !important", "white-space" = "pre-wrap !important"),
+    ".remark-code-line" = list("color" = "#00496f"),
+    ".remark-inline-code" = list("background" = "#dedede !important")
+  ),
+  outfile = "personal.css",
+  append = FALSE,
+  heading = "Extra CSS"
+)
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear",
+           cite.style = "alphabetic",
+           style = "markdown",
+           hyperlink = FALSE,
+           dashed = FALSE)
+bibliography <- ReadBib("./bibliography.bib", check = FALSE)
+NoCite(
+  bibliography,
+  c("downey_think_2012", "shaw_learn_2017", "mueller_beginning_2018")
+)
+```
+
+# Variables – fonctionnement et utilité
+
+Dans un programme informatique, une *variable* permet de stocker un *résultat* durant l'exécution du programme. On pourra ainsi accéder à ce résultat en utilisant le *nom* de la *variable*.
+
+--
+
+Une *variable* est en principe, par définition même du mot, modifiable. Lorsqu'on ne peut modifier le contenu d'une *variable* on parle de *constante*. Certains langages de programmation ne font pas cette distinction. Dans Python il n'existe pas de *constante*.
+
+--
+
+Le programme va associer un certain nombre d'informations à une variable, par exemple:
+- son nom
+- son type (sa *class* dans Python)
+- son adresse (mémoire)
+- sa portée
+- …
+
+---
+
+# Variables – conseils et bonnes pratiques
+
+<blockquote>
+<em>There are only two hard things in Computer Science: cache invalidation and naming things.</em><br />
+— Phil Karlton<sup>1</sup>
+</blockquote>
+
+Dans Python, un nom de variable peut contenir des caractères alphanumériques (`a-z`, `A-Z` et `0-9`) ainsi que le caractère spécial *tiret bas* (`_`). Les variables sont sensible à la casse (i.e. majuscule et minuscule ne sont pas équivalent).
+
+.center[⚠️ **un nom de variable ne peut pas commencer par un chiffre !**]
+
+--
+
+Lorsque vous écrivez un programme, pensez toujours à la lisibilité de votre code. Que ce soit pour vous ou quelqu'un d'autre !
+
+C'est particulièrement important lorsque vous nommez des *variables* ou des *fonctions*. Pour une variable, son nom devrait refléter son contenu. Par exemple : si votre variable contient une liste de fruits, appelez-la `liste_fruits` et non pas `lf`.
+
+.footnote[
+[1] https://www.karlton.org/2017/12/naming-things-hard/
+]
+
+---
+
+# Variables – conseils et bonnes pratiques
+
+Il existe plusieurs *conventions* pour le nom des variables :
+- Snake case 🐍 (utilisé dans le cadre de ce cours) :</br>`ma_super_longue_variable = 123`</br>
+- Camel case 🐫 :</br>`maSuperLongueVariable = 123`</br>
+- Pascal case 👤 :</br>`MaSuperLongueVariable = 123`</br>
+- Kebab case 🥙 (⚠️ incompatible avec Python car utilise des traits d'union) :</br>`ma-super-longue-variable = 123`
+
+Essayez d'être cohérent dans vos programmes et utilisez toujours la même convention.
+
+---
+
+# Variables – attribuer une valeur
+
+La plupart des langages de programmation utilisent le signe égal `=` pour attribuer une valeur à une variable. Il existe cependant certains langages qui possèdent d'autres méthodes pour l'attribution d'une valeur à une variable comme par exemple :
+- ALGOL et PASCAL : `variable := 123`
+- R : `variable <- 123`
+- Magick : `variable << 123`
+
+--
+
+Python utilise le signe `=` pour l'attribution d'une valeur à une variable :
+
+```{python assignement}
+variable = 123
+
+variable
+```
+
+---
+
+# Variables – attribuer une valeur
+
+Il est également possible d'attribuer une valeur à plusieurs variables en même temps :
+
+```{python assignement_multiple}
+variable_1 = variable_2 = 123
+
+variable_1
+variable_2
+```
+
+---
+
+# Variables – attribuer une valeur
+
+Ou d'attribuer différentes valeurs à plusieurs variables en même temps :
+
+```{python assignement_multiple_split, include = F}
+variable_3, variable_4 = 123, 456
+
+variable_3
+variable_4
+```
+
+```{r, echo = FALSE}
+decorate("assignement_multiple_split") %>% 
+  flair_rx("variable_3|123", background = "#ad8cae") %>% 
+  flair_rx("variable_4|456", background = "#4f93b8")
+```
+
+---
+
+# Variables – suppression
+
+Pour supprimer une variable définie précédemment, on peut utiliser une fonction appelée `del()`
+
+```{python delete_variable}
+variable = 123
+variable
+del(variable)
+```
+Si on cherchait à accéder au contenu de `variable` après sa suppression, Python retournerait une erreur comme nous le verrons plus loin.
+
+---
+
+# Variables – types de données
+
+Python connait de nombreux types de variables différentes. Quelques exemples de type de données que nous serons amené à utiliser :
+- **nombres**
+  - **nombres entiers** (*integer* ou *int*)
+  - **nombres réels** (*float*)
+  - nombres complexes (*complex*)
+- **chaines de caractère** (*string* ou *str*)
+- listes (*list*)
+- tuples (*tuple*)
+- dictionaires (*dict*)
+- booléens (*bool*)
+
+Nous nous concentrerons dans un premier temps sur les éléments en **gras** de cette liste.
+
+---
+
+# La fonction *type()*
+
+Dans Python, lorsqu'on souhaite connaitre le type d'une variable on peut utiliser la fonction `type()`. Cette fonction nous indique de quelle *class* (i.e. type de données) la variable est. Python utilise des raccourcis tels que `str` pour *string* ou `int` pour *integer*.
+
+```{python type_function}
+variable_integer = 123
+type(variable_integer)
+variable_string = "abc"
+type(variable_string)
+variable_float = 1.23
+type(variable_float)
+```
+
+---
+
+# Variables – types de données
+
+Une variable dans Python a toujours un attribut *class*. Une variable peut cependant changer de type en fonction de son contenu. Par exemple :
+
+```{python type_change, include = F}
+variable_modif = 123
+type(variable_modif)
+variable_modif = "abc"
+type(variable_modif)
+```
+
+```{r, echo = F}
+decorate("type_change") %>% 
+  flair("variable_modif", background = "#ad8cae")
+```
+
+---
+
+# Variables - nombres
+
+Parmi les variables numériques, on retrouve notamment les nombres entiers (*integer*) et les nombres réels (*float*).
+
+Lorsqu'on attribue un nombre à une variable, Python détermine s'il s'agit d'un nombre entier, ou d'un nombre réel. On peut forcer le type *nombre réel* en rajoutant un point (`.`) après un nombre entier.
+
+```{python integer_float, include = F}
+variable_int = 1
+variable_float = 1.
+
+type(variable_int)
+type(variable_float)
+```
+
+```{r, echo = F}
+decorate("integer_float") %>% 
+  flair(".", background = "#ad8cae")
+```
+
+---
+
+# Nombres - opérations de base
+
+Python proposes des *opérateurs* qui permettent la manipulation simple de différents nombres, entres autres :
+- `+` pour l'addition et `-` pour la soustraction
+- `*` pour la multiplication et `/` pour la division
+- `**` pour les puissances
+- `%` pour le modulo
+
+Exemples:
+
+```{python number_operations}
+1 + 1
+3 * 4
+2 ** 2
+```
+
+---
+
+# Nombres - opérations de base
+
+On peut effectuer une opération numérique et en attribuer le résultat à une variable. On peut également mélanger variables et chiffres dans une opération.
+
+```{python number_operations_mixed}
+resultat_1 = 32 * 8
+resultat_1
+resultat_2 = resultat_1 / 4
+resultat_2
+```
+
+Les parenthèses peuvent influencer la priorité des opérations.
+
+```{python number_operations_priority}
+resultat_3 = (2 + 3) * 5
+resultat_3
+```
+
+
+
+---
+
+# Nombres - opérations de base
+
+Et on peut effectuer des opérations uniquement avec des variables numériques.
+
+```{python number_operations_on_variables}
+variable_1 = 8
+variable_2 = 2
+variable_3 = 1
+
+variable_1 - variable_2
+variable_1 * variable_2 + variable_3
+variable_1 ** variable_2
+```
+
+---
+
+# Variables - chaines de caractères
+
+Pour indiquer à Python qu'on souhaite stocker une chaine de caractère, on met le texte entre guillemets (`"`) ou entre apostrophes (`'`).
+
+```{python type_string, include = F}
+variable_texte_1 = "Ceci est une phrase"
+variable_texte_2 = 'Et cela est aussi une phrase'
+
+type(variable_texte_1)
+type(variable_texte_2)
+```
+
+```{r, echo = F}
+decorate("type_string") %>% 
+  flair_rx(r"("|')", background = "#ad8cae")
+```
+
+---
+
+# Variables - chaines de caractères
+
+Lorsqu'une phrase contient des guillemets ou des apostrophes, on peut utiliser l'autre caractère pour indiquer qu'il s'agit d'une chaine de caractère. Si une phrase devait contenir les deux, le caractère `\` permet d'*échapper* (i.e. d'annuler) un apostrophe ou un guillemet.
+
+```{python type_string_escaped, include = F}
+variable_texte_1 = "Il fera beau aujourd'hui."
+variable_texte_2 = "Mais il faut s'attendre à quelques \"petits\" nuages."
+
+variable_texte_1
+variable_texte_2
+```
+
+```{r, echo = F}
+decorate("type_string_escaped") %>% 
+  flair("'", background = "#ad8cae") %>% 
+  flair_rx(r"(\\")", background = "#ad8cae")
+```
+
+---
+
+# Chaines de caractères - opérations de base
+
+Les chaines de caractères se comportent comme des listes. Un type que données que nous approfondirons plus tard. Voici cependant quelques *opérations* que l'ont peut effectuer avec des chaines de caractères :
+- `+` permet d'*assembler* des chaines de caractères
+- `*` permet de répéter un nombre de fois (doit être un nombre entier)
+
+```{python string_operations}
+"abc" + "cde"
+"abc" * 2
+```
+
+---
+
+# Chaines de caractères - opérations de base
+
+En plus des opérations de base, une variable de *class* `str` possède un certain nombre de *méthodes* (des fonctions qui permettent d'effectuer des opérations sur cette variable).
+
+```{python string_methods}
+variable_texte = "L'hiver va être froid."
+variable_texte
+variable_texte.upper()
+variable_texte.lower()
+```
+
+---
+
+# Variables - conversion
+
+Lorsqu'on souhaite convertir une variable d'un type à un autre, il faut utiliser une fonction de conversion. Python propose des fonctions pour chaque type de données. En voici quelques exemples :
+- `int()` permet de convertir en nombre entier
+- `float()` permet de convertir en nombre réel
+- `str()` permet de convertir en chaine de caractère
+
+```{python conversion}
+int("123")
+float(123)
+str(123)
+```
+
+
+---
+
+# Erreurs
+
+Lorsqu'on essaye d'effectuer des opérations qui ne sont pas possible sur des variables, Python affichera des messages d'erreur. Voici quelque messages d'erreurs que vous pourriez rencontrer.
+
+```{python errors, error = T}
+variable_inexistante
+
+variable_nombre = 123
+variable_nombre.upper()
+```
+
+---
+
+# Erreurs
+
+```{python errors_2, error = T}
+variable_texte = "abc"
+variable_texte + variable_nombre
+int(variable_texte)
+```
+
+---
+
+# Références
+
+```{r refs, echo=FALSE, results="asis"}
+PrintBibliography(bibliography)
+```

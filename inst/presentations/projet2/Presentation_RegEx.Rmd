@@ -3,6 +3,7 @@ title: "Les chaines de caractères 🧶"
 subtitle: "Utiliser les expressions régulières"
 author: "Pascal Burkhard"
 institute: "LDDR 2020-2021"
+knit: pagedown::chrome_print
 output:
   xaringan::moon_reader:
     css: [default, metropolis, metropolis-fonts, personal.css]
@@ -195,7 +196,7 @@ Les métacaractères utilisés dans les expressions régulières sont utilisés 
 définir un point précis dans une chaine de caractères, tel que le début de la chaine ou la limite d'un mot par exemple
 
 - des classes de caractères et des groupes  
-définir un groupe de caractère à faire correspondre
+définir un groupe de caractères à faire correspondre
 
 - des quantifieurs  
 définir le nombre de fois qu'une partie du motif de l'expression régulière est répété

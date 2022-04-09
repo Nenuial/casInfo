@@ -1,0 +1,15 @@
+/* Extra CSS */
+.remark-slide-content {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+.remark-code {
+  background: #dedede !important;
+  white-space: pre-wrap !important;
+}
+.remark-code-line {
+  color: #00496f;
+}
+.remark-inline-code {
+  background: #dedede !important;
+}

@@ -1,0 +1,17 @@
+Package: casInfo
+Type: Package
+Title: Projets CAS Info
+Version: 0.1.0
+Author: Pascal Burkhard
+Maintainer: Pascal Burkhard <pascal.burkhard@gmail.com>
+Description: Contient les fichiers nécessaire à l'exécution des présentations
+    et des exercices en rapport avec les projets du CAS d'Informatique
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    rmarkdown,
+    learnr,
+    reticulate,
+    rsconnect
+RoxygenNote: 7.1.1

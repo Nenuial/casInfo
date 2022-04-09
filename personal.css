@@ -1,0 +1,14 @@
+/* Extra CSS */
+.lightable-striped tbody tr:nth-of-type(even) {
+  background: #00808024 !important;
+}
+pre,.sourceCode {
+  font-size: 45px !important;
+  white-space: pre-wrap !important;
+}
+div.sourceCode {
+  width: 99% !important;
+}
+pre.sourceCode {
+  margin: 0em !important;
+}

@@ -1,0 +1,12 @@
+name: CASProjet1
+title: CASProjet1
+username:
+account: nenuial
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3362140
+bundleId: 3951736
+url: https://nenuial.shinyapps.io/CASProjet1/
+when: 1607288165.47482
+asMultiple: FALSE
+asStatic: FALSE

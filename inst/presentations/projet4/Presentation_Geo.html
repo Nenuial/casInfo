@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Cartographie</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pascal Burkhard" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="personal.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Cartographie
+## avec Python 🐍
+### Pascal Burkhard
+### LDDR 2021-2022
+
+---
+
+
+
+
+# Cartographie
+
+## Introduction
+
+.pull-left-large[La cartographie consiste à représenter un espace (généralement réel) sous une forme graphique simplifiée.
+
+Historiquement les plus vieilles cartes dont on garde une trace sont des *pétroglyphes* comme ceux de Bedolina en Italie (voir ci-contre).
+
+Au cours de la préhistoire, les civilsations greco-romaines font de la cartographie une discipline à part entière. Des savants tels qu'Eratosthène et Ptolémée perfectionnent les techniques et mettent en place des concepts tels que les *systèmes de coordonées* ou les *projections*.]
+
+.pull-right-small[
+&lt;img src="img/bedolina.jpg" width="1067" /&gt;
+]
+
+---
+
+# Cartographie
+
+## Introduction
+
+.pull-left[Au fil des siècles, les cartes réalisées à l'époque de Ptolémée sont reprises et parfois augmentées.
+
+Le développement de la cartographie est souvent étroitement lié avec les volontées de conquête et d'exploration. Les progrès, notament dans le domaine de la navigation permettent également d'étendre les frontières du monde connue et d'améliorer les cartes existante.
+
+Au 16e Siècle, des cartographes comme *Gerardus Mercator* et *Abraham Ortelius* donne un nouvel élan à la discipline. L'invention d'une projection *conforme* par *Mercator* améliore considérablement la navigation. En effet, un cape précis équivaut à une ligne droite sur ce type de cartes.]
+
+.pull-right[
+&lt;img src="img/mercator.png" width="1544" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Les *systèmes d'information géographique*
+
+.pull-left-large[Avec l'apparition des outils numériques, la cartographie vit une nouvelle révolution: l'apparition des *systèmes d'information géographique* ou *SIG* (*GIS* en anglais). La cartographie devient numérique et offre des possibilités de recueil, de traitement et d'analyse qui était jusqu'à présent inimaginable.
+
+Différentes couches de données peuvent être superposées, analysées, voir combinées pour obtenir des informations ou des cartes de synthèse. Ces couches peuvent contenir des données de nature très variée (données satellites, hydrographie, topographie, routes, constructions, zones d'amménagement, informations statistiques, …).]
+
+.pull-right-small[
+&lt;img src="img/gis_layers.jpg" width="803" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Types de données
+
+.pull-left-small[
+Les données numérique de cartographie se divise en deux types :
+
+- les données *vectorielles*
+- les données *raster*
+
+Les données vecteurs peuvent être subdivisée en trois types :
+
+- point
+- ligne
+- polygone
+]
+
+.pull-right-large[
+&lt;img src="img/raster_vector.png" width="843" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Exercices
+
+Lien vers le portail pour les exercices :
+
+.boldcenter[
+[https://geoviews.link/PyCartoProj](https://geoviews.link/PyCartoProj)
+]
+
+---
+
+# Cartographie informatique
+
+## Lire des données raster
+
+Nous aurons besoin des modules suivants :
+
+
+```python
+import matplotlib.pyplot as plt # Pour afficher les données raster
+from matplotlib import cm # Pour la palette de couleur
+from osgeo import gdal # Pour lire les données raster
+```
+
+Pour lire des données raster on aura recours à la fonction `Open` de `gdal` :
+
+
+```python
+DEM = gdal.Open("geodata/Neuchatel.tif")
+DEM_Array = DEM.GetRasterBand(1).ReadAsArray()
+DEM_Array.ndim
+```
+
+```
+## 2
+```
+
+DEM_Array est une matrice avec 2 dimensions: un *rectangle* de données avec les dimensions suivantes:
+
+
+```python
+DEM_Array.shape
+```
+
+```
+## (213, 251)
+```
+
+---
+
+# Cartographie informatique
+
+## Lire des données raster – exercice
+
+Explorez la matrice `DEM_Array`. Vous pouvez accéder à des morceaux de la matrice de la façon suivant:
+
+
+```python
+DEM_Array[50] # Donne toutes les données le long de la 51ème ligne
+```
+
+```python
+DEM_Array[120,120] # Donne la données de la 121ème ligne et de la 121ème colonne
+```
+
+```python
+DEM_Array[120,120:130] # Donne les données de la 121ème ligne, allant de la 121ème à la 130ème colonne
+```
+
+En sachant qu'il s'agit de données raster du canton de Neuchâtel. Quelle données pourrait-on avoir *encodé* dans cette matrice ?
+
+--
+
+
+```python
+DEM_Array[50,120:130]
+```
+
+```
+## array([1193.802, 1199.504, 1177.895, 1160.395, 1131.594, 1109.304,
+##        1102.297, 1088.296, 1077.399, 1058.006], dtype=float32)
+```
+
+Comme nous le montre ce petit *extrait* de la matrice, il s'agit très certainement de l'**altitude**.
+
+---
+
+# Cartographie informatique
+
+## Afficher des données raster – exercice
+
+.pull-left[
+En quelque lignes on peut se rendre compte de ce que donne cette matrice.
+
+
+```python
+plt.imshow(DEM_Array, cmap=cm.gist_earth) # On affiche la matrice sous forme d'image, cmap = palette de couleur à utiliser
+plt.axis('off') # On désactive les coordonées autour de la carte
+```
+
+```python
+cbar = plt.colorbar(shrink=0.5) # On récupère la barre de couleur (en la réduisant à 50% de sa taille originale)
+cbar.set_label('mètres') # et on rajoute le Label `mètres` 
+
+plt.show() # Et on affiche la figure 
+```
+
+Essayez !
+]
+
+--
+
+.pull-right[
+&lt;img src="Presentation_Geo_files/figure-html/neuch-elev-1.png" width="672" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Lire des données vecteur
+
+Nous aurons besoin des modules suivants :
+
+
+```python
+import pandas as pd # pandas permet de manipuler des tableaux de données
+import geopandas as gpd # geopandas `étend` panda pour permettre des colonnes `vecteur`
+import matplotlib.pyplot as plt # Pour afficher des données
+from matplotlib.colors import TwoSlopeNorm # Pour la palette de couleur
+```
+
+Pour lire des données vecteur on aura recours à la fonction `read_file` de `geopandas` :
+
+
+```python
+cantons = gpd.read_file('geodata/Cantons.shp')
+```
+
+---
+
+# Cartographie informatique
+
+## Lire des données vecteur – exercice
+
+Explorez la tableau de données `cantons`. Vous pouvez afficher les colonnes de la manière suivantes :
+
+
+```python
+cantons.columns # Affiche le nom de toutes les colonnes du tableau `cantons`
+```
+
+```python
+cantons['KTNAME'] # Affiche le contenu de la colonne `KTNAME`
+```
+
+Quelle colonne contient les informations géographiques ? Comment sont-elles représentées ?
+
+--
+
+
+```python
+cantons['geometry'].head(5)
+```
+
+```
+## 0    POLYGON ((2692430.313 1281173.385, 2692994.572...
+## 1    MULTIPOLYGON (((2573502.159 1194804.872, 25739...
+## 2    POLYGON ((2662038.335 1237690.711, 2662272.506...
+## 3    POLYGON ((2688457.671 1203339.733, 2688740.672...
+## 4    POLYGON ((2705203.471 1229720.915, 2706143.049...
+## Name: geometry, dtype: geometry
+```
+
+---
+
+# Cartographie informatique
+
+## Lire des données statistiques – exercice
+
+Pandas permet de lire des données statistiques (sous forme de fichier *csv*, *excel* ou autre tableau de données) :
+
+
+```python
+pop = pd.read_csv('statdata/swiss_pop_2021.csv')
+nat = pd.read_csv('statdata/swiss_nat_2021.csv')
+```
+
+
+En utilisant les mêmes fonctions que pour le tableau `cantons`, explorer les tableaux `pop` et `nat`. Que contiennent-ils ?
+
+--
+
+Les chiffres de la **population** et des **taux de natalité** par cantons suisses.
+
+---
+
+# Cartographie informatique
+
+## Combiner des tableaux de données
+
+*Pandas/GeoPandas* permet de facilement combiner des tableaux de données lorsqu'on possède une colonne qui identifie de la même manière les données de deux tableaux différents.
+
+Le code ci-dessous combine le tableau `cantons` (avec sa colonne *identifiant* `KTNR`) avec le tableau `nat` et sa colonne `ID` :
+
+
+```python
+cantons_nat = cantons.set_index('KTNR').join(nat.set_index('ID'))
+cantons_nat.head(3)
+```
+
+```
+##             KTNAME  GRNR  AREA_HA   X_MIN  ...   Canton  Naissances  Filles  Garçons
+## KTNR                                       ...                                      
+## 1           Zürich     4   172894  669244  ...   Zurich       17281    8767     8514
+## 2     Bern / Berne     2   595952  556241  ...    Berne       10234    5310     4924
+## 3           Luzern     6   149352  630127  ...  Lucerne        4451    2243     2208
+## 
+## [3 rows x 26 columns]
+```
+
+La fonction `set_index()` indique la colonne à utiliser comme *clé* d'identification.
+
+---
+
+# Cartographie informatique
+
+## Combiner des tableaux de données – exercice
+
+Trouvez un moyen de combiner le tableau `cantons` avec les données du tableau `pop` **et** les données du tableau `nat`.
+
+--
+
+Indice : la colonne `Canton` dans les deux tableaux `pop` et `nat` pose problème lorsqu'on essaye de joindre le deuxième tableau. La fonction `drop(columns = 'NomDeColonne')` permet de retirer une colonne d'un tableau.
+
+--
+
+
+```python
+cantons_pop_nat = cantons.set_index('KTNR').join(pop.set_index('ID')).join(nat.set_index('ID').drop(columns = 'Canton'))
+cantons_pop_nat.columns
+```
+
+```
+## Index(['KTNAME', 'GRNR', 'AREA_HA', 'X_MIN', 'X_MAX', 'Y_MIN', 'Y_MAX',
+##        'X_CNTR', 'Y_CNTR', 'Z_MIN', 'Z_MAX', 'Z_AVG', 'Z_MED', 'E_MIN',
+##        'E_MAX', 'N_MIN', 'N_MAX', 'E_CNTR', 'N_CNTR', 'Shape_Leng',
+##        'Shape_Area', 'geometry', 'Canton', 'Population', 'Naissances',
+##        'Filles', 'Garçons'],
+##       dtype='object')
+```
+
+---
+
+# Cartographie informatique
+
+## Combiner des tableaux de données – exercice
+
+Il est relativement simple de manipuler des tableaux de données. Si on veut par exemple créer une colonne `TxNat` qui contient le taux de natalité (en pour mille), on peut procéder de la sorte :
+
+
+```python
+cantons_pop_nat['TxNat'] = cantons_pop_nat['Naissances']/cantons_pop_nat['Population']*1000
+cantons_pop_nat['TxNat'].head(3)
+```
+
+```
+## KTNR
+## 1    11.124465
+## 2     9.810839
+## 3    10.690602
+## Name: TxNat, dtype: float64
+```
+
+Créez les colonnes `TxNat` avec le *taux de natalité* (comme ci-dessus), ainsi qu'une colonne `RapFG` avec le rapport des sexes (nombre de naissances *garçons* pour 100 naissances *filles*).
+
+---
+
+# Cartographie informatique
+
+## Combiner des tableaux de données – exercice
+
+
+```python
+cantons_pop_nat['RapFG'] = cantons_pop_nat['Garçons']/cantons_pop_nat['Filles']*100
+cantons_pop_nat['RapFG'].head(10)
+```
+
+```
+## KTNR
+## 1      97.114178
+## 2      92.730697
+## 3      98.439590
+## 4     103.902439
+## 5      94.137931
+## 6      89.010989
+## 7     106.010929
+## 8     106.250000
+## 9      90.807799
+## 10     95.023573
+## Name: RapFG, dtype: float64
+```
+
+---
+
+# Cartographie informatique
+
+## Afficher des données vecteur
+
+.pull-left[
+On peut très facilement afficher la carte d'un tableau de données géographiques.
+
+
+```python
+cantons_pop_nat.plot()
+```
+]
+
+.pull-right[
+&lt;img src="Presentation_Geo_files/figure-html/map-swiss-no-data-1.png" width="672" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Afficher des données vecteur
+
+.pull-left[
+En spécifiant un argument `column='TxNat'` par exemple, on peut afficher les données d'une colonne sur la carte.
+
+
+```python
+cantons_pop_nat.plot(column='TxNat', legend=True)
+```
+]
+
+.pull-right[
+&lt;img src="Presentation_Geo_files/figure-html/map-swiss-cbr-1.png" width="672" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Afficher des données vecteur – exercice
+
+Faites une carte avec le rapport de naissances filles/garçons. Quel problème pouvez-vous constater ?
+
+--
+
+.pull-left[
+
+```python
+cantons_pop_nat.plot(column='RapFG', legend=True)
+```
+]
+
+.pull-right[
+&lt;img src="Presentation_Geo_files/figure-html/map-swiss-sxrt-1.png" width="672" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Afficher des données vecteur – exercice
+
+--
+
+.pull-left[
+
+```python
+vmin, vmax, vcenter = cantons_pop_nat['RapFG'].min(), cantons_pop_nat['RapFG'].max(), 100
+norm = TwoSlopeNorm(vmin=vmin, vcenter=vcenter, vmax=vmax)
+
+cmap = 'RdBu'
+cbar = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+cantons_pop_nat.plot(column='RapFG', cmap=cmap, legend=False)
+
+plt.colorbar(cbar, orientation = 'horizontal')
+```
+
+```python
+plt.axis('off')
+```
+
+```python
+plt.show()
+```
+]
+
+.pull-right[
+&lt;img src="Presentation_Geo_files/figure-html/map-swiss-sxrt-2-1.png" width="672" /&gt;
+]
+
+---
+
+# Cartographie informatique
+
+## Projet – travaux de groupes
+
+Explorez les données qui se trouvent dans le dossier *statdata*. À partir de ces données :
+
+- réalisez une carte – éventuellement en combinant plusieurs indicateurs ;
+- analysez la carte que vous obtenez ;
+- préparez une brève présentation de votre carte et de ce qu'elle montre (~5 minutes).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

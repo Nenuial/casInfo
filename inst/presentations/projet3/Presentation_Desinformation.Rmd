@@ -1,0 +1,275 @@
+---
+title: "La désinformation"
+subtitle: "Outils"
+author: "Pascal Burkhard"
+institute: "LDDR 2021-2022"
+output:
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, personal.css]
+    lib_dir: libs
+    self_contained: true
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+library(xaringanthemer)
+library(flair)
+options(htmltools.dir.version = FALSE)
+style_extra_css(
+  css = list(
+    ".remark-slide-content" = list("padding-left" = "80px", "padding-right" = "80px"),
+    ".remark-code" = list("background" = "#dedede !important", "white-space" = "pre-wrap !important"),
+    ".remark-code-line" = list("color" = "#00496f"),
+    ".remark-inline-code" = list("background" = "#dedede !important"),
+    ".pull-left" = list("float" = "left", "width" = "47%"),
+    ".pull-right" = list("float" = "right", "width" = "47%"),
+    ".pull-left-large" = list("float" = "left", "width" = "63%"),
+    ".pull-right-large" = list("float" = "right", "width" = "63%"),
+    ".pull-left-small" = list("float" = "left", "width" = "30%"),
+    ".pull-right-small" = list("float" = "right", "width" = "30%"),
+    ".bordered" = list("display" = "inline-block", "border" = "1px solid black"),
+    ".flair-pink code" = list("background-color" = "#ad8cae !important"),
+    ".flair-blue code" = list("background-color" = "#4f93b8 !important"),
+    ".flair-green code" = list("background-color" = "#2e9093 !important"),
+    ".flair-orange code" = list("background-color" = "#ee950b !important"),
+    ".flair-red code" = list("background-color" = "#dd4123 !important")
+  ),
+  outfile = "personal.css",
+  append = FALSE,
+  heading = "Extra CSS"
+)
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear",
+           cite.style = "authoryear",
+           style = "markdown",
+           hyperlink = TRUE,
+           dashed = FALSE)
+bibliography <- ReadBib("./bibliography.bib", check = FALSE)
+
+NoCite(bibliography, c("noauthor_project_2021", "miridjanian_fake_2018", "amnesty_international_youtube_2021",
+                       "noauthor_les_2020"))
+```
+
+# L'importance d'une information fiable
+
+> Celui qui détient l'information, détient le pouvoir. 
+> Celui qui l'entretien, détient le monde.
+>
+> `r tufte::quote_footer("— Adam Smires")`
+
+<br />
+
+> A properly functioning democracy depends on an informed electorate.
+>
+> `r tufte::quote_footer("— Thomas Jefferson")`
+
+<br />
+
+> Un peuple qui ne peut plus croire en rien ne peut pas se faire une opinion. Il est privé de sa capacité d’agir, de penser, de juger. Et avec ce peuple, vous pouvez faire ce que vous voulez.
+>
+> `r tufte::quote_footer("— Hannah Arendt")`
+
+---
+
+# Quelques définitions
+
+- **Désinformation**  
+  Technique de communication cherchant à induire en erreur avec des informations fausses ou incomplètes; souvent dans le but d'influencer l'opinion publique ou à des fins lucratives.
+
+- **Fake news (infox ou fausse nouvelle)**  
+  Terme récent utilisé pour désigner des nouvelles mensongères, particulièrement sur internet. Également utilisé pour chercher à discréditer le travail consciencieux des journalistes (usage fréquent par l'ancien président Donald Trump).
+  
+- **Fait alternatif**  
+  Expression utilisée pour la première fois par Kellyanne Conwe (conseillère du président Donald Trump) pour désigner des "semi-mensonges" qui s'affirment vérité et qui ne sont pas vérifiables.
+  
+- **Théories du complot**
+  Les théories du complot donnent des explications simples et définitives pour décrypter des événements complexes. Elles font concurrence aux faits établis et aux thèses dites officielles.
+  
+
+Sources:  
+- `r Cite(bibliography, "youverify_project_disinformation_2021", textual = T)`
+- `r Cite(bibliography, "rts_decouverte_les_2021", textual = T)`
+
+---
+
+# La désinformation
+
+La désinformation n'est pas un phénomène récent. Le concept même d'une fake news remonte probablement à l'Antiqué voir même au-delà : tromper son ennemi pour l'induire en erreur présente un avantage stratégique.
+
+Les « fake news » ne datent donc pas de l'ère numérique; mais la propagation rapide, massive et extrêmement simple d'informations par le biais des nouvelles technologies de l'information a largement accentué le problème.
+
+Les « fake news » et autres manifestations de la désinformation joue souvent sur des registres émotionnels. Ils mêlent habilement le vrai et le faux afin d'induire en erreur.
+
+Certains développements technologiques, comme l'intelligence artificielle, sont aujourd'hui détournés pour alimenter la désinformation (« deep fakes » par exemple). Certains algorithmes, notamment sur les réseaux sociaux, « enferment » l'utilisateur dans une « bulle » d'information.
+
+Dans sa forme la plus *extrême*, la désinformation devient une théorie du complot.
+
+---
+
+# La désinformation
+
+<style>
+#my_video {
+  position: fixed;
+  right: 0;
+  bottom: 20px;
+  min-width: 100%;
+  min-height: 80%;
+  width: 100%;
+}
+</style>
+
+<video id="my_video" width="100%" height="80%" controls>
+  <source src="vid/y_a_pas_ecole_web_2_0.mp4" type="video/mp4">
+</video>
+
+---
+
+# Questionnaire
+
+Répondez aux questions :
+
+```{r echo=FALSE, fig.align='center', out.width='50%'}
+qr <- qrcode::qr_code("https://forms.office.com/Pages/ResponsePage.aspx?id=8TrxUqTPjk-EoaEY7AXBIB2y93mqIqlPsZFMW5rx8lBUQU5GMjNFSldRU09IN0VRRzZRN0JTNkVFNS4u")
+plot(qr)
+```
+
+---
+
+# La désinformation
+
+## Principales motivations
+
+- économiques (trafic, profit, publicité)
+
+- politiques (pouvoir, ingérence, déstabilisation)
+
+- sociétales (réputation, influence, sensation, attention, etc.)
+
+## Se poser les bonnes questions
+
+- Qui est derrière cette information (source initiale) ?
+
+- Quelles sont les preuves (sur quoi se base les arguments, quels faits, etc.) ?
+
+- Que disent les autres sources (faisceau de *preuves* ou éléments contradictoires) ?
+
+---
+
+# Vérifier une information
+
+<style>
+#my_video {
+  position: fixed;
+  right: 0;
+  bottom: 20px;
+  min-width: 100%;
+  min-height: 80%;
+  width: 100%;
+}
+</style>
+
+<video id="my_video" width="100%" height="80%" controls>
+  <source src="vid/y_a_pas_ecole_verifie_info.mp4" type="video/mp4">
+</video>
+
+---
+
+# Vérifier une information - comment ?
+
+## Quelques principes généraux
+
+- Utiliser les moteurs de recherches (Google, Bing, DuckDuckGo, Baidu, Yandex, …) :  
+  De nombreux résultats, notamment sur des sites « fiables » (presse reconnue, Wikipedia, etc.) sont un bon indicateur.
+- Vérifier le nom et l'extension du site (⚠️ lorsque l'extension ≠ pays attendu / par exemple .ru ou .cn)
+- Vérifier la fiabilité de la source (à partir d'un article Wikipedia par exemple)
+- Utiliser le Décodex <https://www.lemonde.fr/verification/>
+- Utiliser des sites de fact checking, quelques exemples :
+  * <https://factuel.afp.com>
+  * <https://www.hoaxbuster.com>
+  * <https://eufactcheck.eu>
+  * …
+
+---
+
+# Vérifier une information - comment ?
+
+## Les images
+
+- Vérifier les métadonnées (<http://exif-viewer.com> )
+- Utiliser la recherche par image inversée (<https://images.google.com>, <https://yandex.ru/images> ou <https://yandex.ru/images> par ex.)
+
+## Les vidéos
+
+- Lorsqu'il s'agit d'une vidéo sur YouTube : utiliser [YouTube DataViewer (Amnesty International)](https://citizenevidence.amnestyusa.org)
+- Utiliser la recherche par image inversée sur plusieurs captures de la vidéo
+
+---
+
+# Vérifier une information - comment ?
+
+## Les images - exercice pratique
+
+- Vérifiez les cinq images
+  * Quelle est la source originale de ces images ?
+  * Cette image a-t-elle fait l'object d'une controverse ?
+  * Ont-elles été manipulée et si oui, comment ?
+
+--
+
+- Correction :
+  * Image 1 : Photomontage artistique de l'utilisatrice Instagram [Thuie](https://www.instagram.com/p/B6Xt-bLBLOA/).
+  * Image 2 : Couverture du magazine américain [*The Economist*](https://www.economist.com/leaders/2010/06/17/obama-v-bp) qui a [manipulé](https://www.motsdimages.ch/Une-image-soluble-dans-le-petrole.html) la photo pour en retirer deux autres personnes et ne garder que Barack Obama *seul* à contempler le désastre écologique.
+  * Image 3 : Photo d'un soldat irakien qu'un soldat américain aide à boire ; photo par Itsuo Inouye d'[AP Images](http://www.apimages.com/metadata/Index/Associated-Press-International-News-Iraq-IRAQ-US-WAR/41f6220c9ee5da11af9f0014c2589dfb) qui a été détournée à de multiples occasions.
+  * Image 4 : [Image manipulée](https://observers.france24.com/fr/20180326-etats-unis-intox-emma-gonzales-dechirer-constitution-armes-nra) (retouchée) d'Emma Gonzalez, figure du mouvement anti-armes aux États-Unis. Dans l'original elle ne déchire pas la constitution des USA, mais une cible d'entrainement au tir.
+  * Image 5 : [Image manipulée](https://www.dailymail.co.uk/news/article-1363540/SAS-rounded-booted-Libyan-mission-turns-farce.html) (rajout des 3 avions russes) par le site Al Arabiya News parlant du mouvement de rébellion libyen.
+
+---
+
+# Discussion - débat
+
+- Lisez l'article sur les *Fake news* de *La Libération* :  
+  *Réseaux sociaux : comment réguler sans (toujours) censurer ?*
+
+--
+
+- Pensez-vous que la désinformation représente un danger réel pour la société ?
+
+- Quel rôle les géants de la tech devraient-ils jouer ? Les réseaux sociaux devraient-ils retirer les publications qui diffusent des informations erronées ?
+
+```{r echo=FALSE, fig.align='center', out.width='30%'}
+qr <- qrcode::qr_code("https://www.kialo-edu.com")
+plot(qr)
+```
+
+---
+
+# Discussion - débat
+
+## Consignes Kialo
+
+- Discuter par groupes de 4-6 des arguments présentés dans l'article de *La Libération*
+
+- Formulez, puis saisissez des arguments *pour* ou *contre* la *responsabilité* des réseaux sociaux dans le débat sur la plateforme *Kialo*
+
+- Évitez les *doublons* ! Prenez le temps de lire les arguments existants.
+
+- Évaluez la qualité des arguments
+
+- Positionnez-vous par rapport à la question de départ.
+
+---
+
+# Références
+
+```{r refs, echo=FALSE, results="asis"}
+PrintBibliography(bibliography)
+```

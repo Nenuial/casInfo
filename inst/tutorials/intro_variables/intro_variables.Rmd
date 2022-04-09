@@ -1,0 +1,392 @@
+---
+title: "Introduction à Python 🐍"
+subtitle: "Variables et opérations de base"
+output:
+  learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Consignes
+
+### Exécution de code
+
+Dans chacune des parties de ce tutoriel, vous serez amené à écrire de petites séquences de code. Vous pouvez tester l'exécution du code au moyen du bouton *Run Code*.
+
+### Solutions
+
+Pour de nombreuses séquences, une solution est proposée. Il est possible que votre code ne corresponde pas exactement à la solution, vous devriez cependant arriver au même résultat en exécutant le code de la solution. Essayez si vous avez un doute !
+
+### Questionnaires
+
+Après chaque partie du tutoriel, quelques questions à choix multiples vous permettent de vérifier vos connaissances. Pour certaines questions vous pouvez revenir aux exercices et utiliser une des zones de code pour expérimenter 😉
+
+## Introduction {data-progressive=TRUE}
+
+### Attribuer une valeur
+
+Créez une variable intitulée `boa` qui contient la chaine de caractères `constrictor`. Vérifiez que la variable `boa` contient bien la valeur que vous lui avez attribuée.
+
+```{python boa_constrictor, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{python boa_constrictor-solution}
+boa = "constrictor"
+boa
+```
+
+### Attribuer des valeurs
+
+Sur **une seule ligne**, créez une variable `pi` et une variable `repi` contenant chacune le nombre réel `3.14`. Vérifier que les deux variables contiennent bien la valeur `3.14`.
+
+```{python pi_et_repi, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{python pi_et_repi-solution}
+pi = repi = 3.14
+pi
+repi
+```
+
+Toujours sur **une seule ligne**, créez une variable `pi` contenant le nombre `3.14` et une variable `py` contenant la chaine de caractère `thon`. Vérifier pour chacune de ces variables qu'elles contiennent bien la bonne valeur.
+
+```{python pi_et_thon, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{python pi_et_thon-solution}
+pi, py = 3.14, "thon"
+pi
+py
+```
+
+## Quelques questions {data-progressive=TRUE}
+
+### Conventions
+
+```{r var_naming_quiz, echo = FALSE}
+quiz(
+  caption = "Les bonnes pratiques",
+  question("Lesquelles de ces variables ne sont **pas valables** dans Python ?",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Super !",
+       answer("`3mousquetaires`", correct = TRUE),
+       answer("`_3mousquetaires`"),
+       answer("`trois_mousquetaires`"),
+       answer("`trois-mousquetaires`", correct = TRUE)
+  ),
+  
+  question("Laquelle de ces variables utilise la convention du snake case ?",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Excellent !",
+       answer("`snake_case`", correct = TRUE),
+       answer("`Snake_Case`"),
+       answer("`snakeCase`"),
+       answer("`SnakeCase`")
+  )
+)
+```
+
+### Attribution
+
+```{r var_attribution_quiz, echo = FALSE}
+quiz(
+  caption = "",
+  question("Parmi les symboles ci-dessous, lesquels sont utilisés dans un langage de programmation pour assigner une valeur à une variable ? Sélectionnez toutes les possibilités.",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Bravo !",
+       answer("`<-`", correct = TRUE),
+       answer("`=`", correct = TRUE),
+       answer("`:=`", correct = TRUE),
+       answer("`%`")
+  ),
+  
+  question("Laquelle de ces propositions attribue la valeur `123` aux variables `x` **et** `y`",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Félicitation !",
+       answer("`x = 123`"),
+       answer("`y = 123`"),
+       answer("`x = y <- 123`"),
+       answer("`x = y = 123`", correct = TRUE)
+  )
+)
+```
+
+### Manipulation
+
+```{r var_manipulation_quiz, echo = FALSE}
+quiz(
+  caption = "",
+  question("Laquelle des fonctions ci-dessous permet de connaitre le type de données que contient une variable ?",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Top !",
+       answer("`type()`", correct = TRUE),
+       answer("`class()`"),
+       answer("`typeof()`"),
+       answer("`vartype()`")
+  ),
+  
+  question("Laquelle des fonctions ci-dessous permet de supprimer une variable ?",
+       random_answer_order = TRUE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Parfait !",
+       answer("`del()`", correct = TRUE),
+       answer("`suppr()`"),
+       answer("`delete()`"),
+       answer("`poubelle()`")
+  )
+)
+```
+
+## Chiffres {data-progressive=TRUE}
+
+### Opération simple
+
+En utilisant la variable `pi` pour $\pi$, faites le calcul suivant : $\pi - \frac{4}{3\pi}$
+
+```{python simple_math-prepare}
+pi = 3.1415926535897932384626433832795028841971693993751058209749445923
+```
+
+```{python simple_math, exercise = TRUE, exercise.lines = 1, exercise.setup = "simple_math-prepare"}
+
+```
+
+```{r simple_math_quiz, echo = FALSE}
+question("Le résultat est (arrondissez à la 3<sup>e</sup> décimale)…",
+  random_answer_order = TRUE, allow_retry = TRUE,
+  incorrect = "C'est malheureusement faux.", correct = "Exact !",
+  answer("1.618"),
+  answer("2.141"),
+  answer("2.717", correct = TRUE),
+  answer("3.1415")
+)
+```
+
+### Nombre réel
+
+Attribuez à la variable `nombre_reel` la valeur `1` et faites en sorte que le type de la variable soit un nombre réel. Vérifiez le contenu de votre variable et son type.
+
+```{python floating_integer, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{python floating_integer-solution}
+nombre_reel = 1.
+nombre_reel
+type(nombre_reel)
+```
+
+### Variable mystère
+
+Le bloc ci-dessous a une variable `mystere` déjà définie. Trouvez le type cette variable.
+
+```{python number_type-prepare}
+mystere = 1.
+```
+
+```{python number_type, exercise = TRUE, exercise.lines = 1, exercise.setup = "number_type-prepare"}
+
+```
+
+```{r number_type_quiz, echo = FALSE}
+question("La variable `mystere` est de type…",
+  random_answer_order = TRUE, allow_retry = TRUE,
+  incorrect = "C'est malheureusement faux.", correct = "Bien joué !",
+  answer("*int*"),
+  answer("*float*", correct = TRUE),
+  answer("*str*"),
+  answer("*bool*")
+)
+```
+
+### Division mystère
+
+Le bloc ci-dessous a deux variables mystères (`mystere_1` et `mystere_2`). Calculez le résultat de la division de `mystere_1` par `mystere_2`.
+
+```{python golden_mystery-prepare}
+import math
+mystere_1 = round(1 + math.sqrt(5), 3)
+mystere_2 = 2
+```
+
+```{python golden_mystery, exercise = TRUE, exercise.lines = 1, exercise.setup = "golden_mystery-prepare"}
+
+```
+
+```{r golden_mystery_quiz, echo = FALSE}
+question("Le résultat de la division est…",
+  random_answer_order = FALSE, allow_retry = TRUE,
+  incorrect = "C'est malheureusement faux.", correct = "Bien joué !",
+  answer("$1.0$"),
+  answer("$1.414$"),
+  answer("$1.618$", correct = TRUE),
+  answer("$3.1415$")
+)
+```
+
+## Quelques questions {data-progressive=TRUE}
+
+### Opérations numériques
+
+```{r number_power_quiz, echo = FALSE}
+quiz(
+  caption = "Calculs avec Python",
+  question("Lequel des ces opérateurs permet de mettre à la puissance dans Python ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Super !",
+       answer("`^`"),
+       answer("`^^`"),
+       answer("`*`"),
+       answer("`**`", correct = TRUE)
+  ),
+  
+  question("Lequel de ces opérateurs permet de multiplier dans Python ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Parfait !",
+       answer("`#`"),
+       answer("`%`"),
+       answer("`&`"),
+       answer("`*`", correct = TRUE)
+  ),
+  
+  question("Lequel de ces opérateurs permet d'obtenir le modulo dans Python ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Excellent !",
+       answer("`#`"),
+       answer("`%`", correct = TRUE),
+       answer("`&`"),
+       answer("`§`")
+  )
+)
+```
+
+### Conversions numériques
+
+```{r number_conversion_quiz, echo = FALSE}
+quiz(
+  caption = "D'un type à un autre…",
+  question("Laquelle de ces fonctions vous permet d'obtenir un nombre réel à partir d'un nombre entier ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Bravo !",
+       answer("`flo()`"),
+       answer("`float()`", correct = TRUE),
+       answer("`floating()`"),
+       answer("`floating_number()`")
+  ),
+  
+  question("Que est le résultat de la conversion suivante : `int(3.14)` ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Brilliant !",
+       answer("`3`", correct = TRUE),
+       answer("`3.1`"),
+       answer("`3.14`"),
+       answer("`4`")
+  )
+)
+```
+
+## Chaines de caractères {data-progressive=TRUE}
+
+### Opération simple
+
+Créez une variable `texte` contenant la chaine de caractère `Je m'appelle` et une variable `prenom` avec votre prénom. Combinez ces deux variables pour former une phrase. 
+
+```{python my_name, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{python my_name-solution}
+texte, prenom = "Je m'appelle", "Alfred"
+texte + " " + prenom + "."
+```
+
+### Séquence mystère
+
+Le bloc ci-dessous contient trois variables mystères (`mystere_1`, `mystere_2` et `mystere_3`). Assemblez ces trois variables.
+
+```{python mystery_sequence-prepare}
+mystere_1 = "banane"
+mystere_2 = "pomme"
+mystere_3 = "fraise"
+```
+
+```{python mystery_sequence, exercise = TRUE, exercise.lines = 1, exercise.setup = "golden_mystery-prepare"}
+
+```
+
+```{python mystery_sequence-solution}
+mystere_1 + " " + mystere_2 + " " + mystere_3
+```
+
+```{r mystery_sequence_quiz, echo = FALSE}
+question("La séquence obtenue est…",
+  random_answer_order = FALSE, allow_retry = TRUE,
+  incorrect = "C'est malheureusement faux.", correct = "Exact !",
+  answer("banane pomme fraise", correct = TRUE),
+  answer("banane fraise pomme"),
+  answer("pomme banane fraise"),
+  answer("fraise pomme banane")
+)
+```
+
+### Manipulation
+
+Attribuez la phrase `Le python réticulée est un serpent constricteur.` à la variable `phrase` puis mettez celle-ci tout en majuscules.
+
+```{python reticulate_sentence, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{python reticulate_sentence-solution}
+phrase = "Le python réticulée est un serpent constricteur."
+phrase.upper()
+```
+
+## Quelques questions {data-progressive=TRUE}
+
+### Conversions de chaines de caractères
+
+```{r string_conversion_quiz, echo = FALSE}
+quiz(
+  caption = "D'un type à un autre…",
+  question("Vous souhaitez transformer le résultat d'une opération mathématique stockée dans la variable `resultat` en texte. Quelle fonction vous permet d'y parvenir ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Parfait !",
+       answer("`str(resultat)`", correct = TRUE),
+       answer("`txt(resultat)`"),
+       answer("`texte(resultat)`"),
+       answer("`char(resultat)`")
+  ),
+  
+  question("En utilisant la bonne fonction de conversion, vous transformez `3.14` en chaine de caractère. Comment cela s'affichera-t-il ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Excellent !",
+       answer("`'3.14'`", correct = TRUE),
+       answer("`3.14`"),
+       answer("`'3'`"),
+       answer("`3`")
+  )
+)
+```
+
+### Transorfmation de chaines de caractères
+
+```{r conversion_quiz, echo = FALSE}
+quiz(
+  caption = "",
+  question("La variable `phrase` contient du texte. Vous souhaitez afficher cette phrase tout en miniscule. Quelle commande vous permet d'y arriver ?",
+       random_answer_order = FALSE, allow_retry = TRUE,
+       incorrect = "C'est malheureusement faux.", correct = "Super !",
+       answer("`min(phrase)`"),
+       answer("`lower(phrase)`"),
+       answer("`phrase.min()`"),
+       answer("`phrase.lower()`", correct = TRUE)
+  )
+)
+```
